@@ -1,0 +1,171 @@
+    1  git clone https://github.com/welel/noted.git project
+    2  ls
+    3  cd project/
+    4  ls
+    5  sudo su
+    6  psql --version
+    7  su postgres
+    8  sudo su postgres
+    9  sudo vi req.sh
+   10  sudo chmod u+x req.sh 
+   11  sudu ./req.sh 
+   12  sudo ./req.sh 
+   13  pg_trgm
+   14  sudo pg_trgm
+   15  python3 -m pip install --user --upgrade pip
+   16  python3 -m pip install --user --upgrade pip3
+   17  python3 -m pip3 install --user --upgrade pip3
+   18  sudo python3 -m pip install --user --upgrade pip
+   19  pip -v
+   20  sudo apt install python3-pip
+   21  python3 -m pip install --user virtualenv
+   22  python3 -m venv env
+   23  sudo python3 -m venv env
+   24  sudo apt install python3.10-venv
+   25  python3 -m venv env
+   26  source env/bin/activate
+   27  sudo cp .env.dist .env
+   28  sudo vi .env
+   29  pip install -r requirements/local.txt
+   30  sudo vi .env
+   31  python manage.py makemigrate --settings=core.settings.local
+   32  ls
+   33  cd noted/
+   34  ls
+   35  cd core/
+   36  ls
+   37  cd settings/
+   38  ls
+   39  sudo vi local.py 
+   40  python manage.py makemigrate --settings=core.settings.local
+   41  make setdb
+   42  cd ../../
+   43  ls
+   44  cd ../
+   45  l
+   46  svi Makefile 
+   47  vi Makefile 
+   48  make setdb
+   49  python manage.py makemigrate --settings=core.settings.local
+   50  sudo python manage.py makemigrate --settings=core.settings.local
+   51  ls
+   52  cd noted/
+   53  ls
+   54  make setdb
+   55  python manage.py makemigrate --settings=core.settings.local
+   56  curl 127.0.0.1:8000
+   57  curl 127.0.0.1:8000dadd
+   58  curl http://127.0.0.1:8000/
+   59  cd project/
+   60  sudo vi .env
+   61  ls
+   62  sudo su postgres
+   63  ll
+   64  vi Makefile 
+   65  ls
+   66  cd noted/
+   67  ls
+   68  cd core/
+   69  ls
+   70  cd settings/
+   71  ls
+   72  cd ../
+   73  ls
+   74  python3 manage.py migrate
+   75  source env/bin/activate
+   76  cd ../
+   77  source env/bin/activate
+   78  ls
+   79  cd noted/
+   80  python3 manage.py migrate
+   81  cd ../
+   82  python3 manage.py makemigrate --settings=core.settings.local
+   83  python manage.py makemigrate --settings=core.settings.local
+   84  cd noted/
+   85  python3 manage.py makemigrate --settings=core.settings.local
+   86  sudo vi ../.env
+   87  python3 manage.py makemigrate --settings=core.settings.local
+   88  cd core/
+   89  cd settings/
+   90  ls
+   91  vi base.py 
+   92  cd ../
+   93  python3 manage.py makemigrate --settings=core.settings.local
+   94  cd core/settings/
+   95  sudo vi base.py 
+   96  ls
+   97  sudo vi local.py 
+   98  sudo vi production.py 
+   99  sudo vi test.py 
+  100  cd ../../
+  101  sudo vi ../,e
+  102  sudo vi ../.env
+  103  python3 manage.py makemigrate --settings=core.settings.local
+  104  sudo vi ../.env
+  105  cd core/settings/
+  106  ls
+  107  sudo vi base.py 
+  108  sudo vi local.py 
+  109  sudo vi production.py 
+  110  sudo vi test.py 
+  111  cd ../../../
+  112  Makefile setdb
+  113  ls
+  114  sudo 
+  115  sudo Makefile setdb
+  116  cd noted/
+  117  ls
+  118  python3 manage.py makemigrate --settings=core.settings.local
+  119  python3
+  120  sudo vi core/settings/base.py 
+  121  python3
+  122  sudo vi ../.env
+  123  cd core/
+  124  cd settings/
+  125  ls
+  126  suod vi base.py 
+  127  sudo vi base.py 
+  128  cd ../
+  129  python3 manage.py makemigrate --settings=core.settings.local
+  130  sudo vi core/settings/local.py
+  131  python3 manage.py runserver --settings=core.settings.local
+  132  sudo vi core/settings/local.py 
+  133  python3 manage.py runserver --settings=core.settings.local
+  134  sudo vi ../en
+  135  sudo vi ../.env
+  136  sudo vi core/settings/local.py 
+  137  python3 manage.py runserver --settings=core.settings.local
+  138  sudo vi core/settings/local.py 
+  139  python3 manage.py runserver --settings=core.settings.local
+  140  sudo vi core/settings/local.py 
+  141  python3 manage.py runserver --settings=core.settings.local
+  142  sudo apt install lsb-release
+  143  curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+  144  echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+  145  sudo apt-get update
+  146  sudo apt-get install redis
+  147  cd /etc/
+  148  ls
+  149  cd redis/
+  150  sudo su
+  151  cd 
+  152  sudo find / -name "redis.conf" -exec grep -H "^dir" {} \
+  153  sudo find / -name "redis.conf" -exec grep -H "^dir" {} 
+  154  sudo find / -name "redis.conf" -exec grep -H "^dir"
+  155  cd project/
+  156  sudo vi .env
+  157  sudo systemctl status redis
+  158  redis-cli ping
+  159  cd noted/
+  160  source env/bin/activate
+  161  cd ../
+  162  source env/bin/activate
+  163  ls
+  164  which python
+  165  python3 manage.py makemigrate --settings=core.settings.local
+  166  cd noted/
+  167  python3 manage.py makemigrate --settings=core.settings.local
+  168  python manage.py runserver --settings=core.settings.local 0.0.0.0:8000
+  169  histroy
+  170  history
+  171  history > ../history.txt
