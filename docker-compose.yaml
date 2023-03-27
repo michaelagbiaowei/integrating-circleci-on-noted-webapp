@@ -1,1 +1,78 @@
-working in progress
+version: '3'
+
+services:
+  # APP {DJANGO}
+  notedapp:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      - IP=
+      - SECRET_KEY=
+      - DATABASE_NAME=
+      - DATABASE_USER=
+      - DATABASE_PASSWORD=
+      - DATABASE_HOST=
+      - DATABASE_PORT=
+      - EMAIL_HOST_USER=
+      - EMAIL_HOST_PASSWORD=
+      - YANDEX_ID=
+      - YANDEX_SECRET=
+      - GITHUB_ID=
+      - GITHUB_SECRET=
+      - ADMIN_NAME=
+      - ADMIN_EMAIL=
+      - TELEGRAM_BOT_TOKEN=
+      - REDIS_LOCATION=
+    volumes:
+      - site:/noted
+      - static:/noted/frontend
+      - media:/noted/media
+    ports:
+      - "80:8000"
+    networks:
+      - noted-network
+
+# DATABASE {POSTGRESQL}
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=DATABASE_HOST
+      - POSTGRES_USER=$DATABASE_USER
+      - POSTGRES_PORT=$DATABASE_PORT
+      - POSTGRES_DB=$DATABASE_NAME
+      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    networks:
+      - noted-network
+    healthcheck:
+        test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
+        retries: 3
+        timeout: 5s
+  
+  # CACHING
+  redis:
+    image: redis
+    container_name: redis
+    expose:
+      - 6379
+    networks:
+      - noted-network
+    depends_on:
+      - postgres
+
+# NETWORK AND DRIVERS
+networks:
+  network:
+    name: noted-network
+    driver: bridge
+        
+volumes:
+  postgres_data:
