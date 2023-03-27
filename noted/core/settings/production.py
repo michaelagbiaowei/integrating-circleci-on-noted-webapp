@@ -10,7 +10,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     "welel-noted.site",
     "www.welel-noted.site",
-    get_env_variable("IP"),
+    get_env_variable("IP"), # ELASTIC IP
 ]
 
 CSRF_TRUSTED_ORIGINS = [
