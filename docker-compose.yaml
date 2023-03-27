@@ -41,9 +41,9 @@ services:
     env_file:
       - .env
     environment:
-      - POSTGRES_HOST=${DATABASE_HOST}
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PORT=${DATABASE_PORT}
+      - POSTGRES_HOST="${DATABASE_HOST}"
+      - POSTGRES_USER="${DATABASE_USER}"
+      - POSTGRES_PORT="${DATABASE_PORT}"
       - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
     volumes:
@@ -53,7 +53,7 @@ services:
     networks:
       - noted-network
     healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
+      test: [ "CMD", "pg_isready", "-q", "-d", "${DATABASE_NAME}", "-U", "${DATABASE_USER}" ]
       retries: 3
       timeout: 5s
 
