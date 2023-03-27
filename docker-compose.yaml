@@ -41,11 +41,11 @@ services:
     env_file:
       - .env
     environment:
-      - POSTGRES_HOST=DATABASE_HOST
-      - POSTGRES_USER=$DATABASE_USER
-      - POSTGRES_PORT=$DATABASE_PORT
-      - POSTGRES_DB=$DATABASE_NAME
-      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+      - POSTGRES_HOST=${DATABASE_HOST}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PORT=${DATABASE_PORT}
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     expose:
