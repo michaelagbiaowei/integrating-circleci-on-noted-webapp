@@ -6,10 +6,10 @@ COPY . .
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
 
-RUN pip install -r requirements/production.txt \
-    && apt-get update \
-    && apt-get -y install wkhtmltopdf \
-    && apt-get -y autoclean
+RUN pip install --no-cache-dir -r requirements/production.txt \
+    && apt update \
+    && apt -y install wkhtmltopdf \
+    && apt -y autoclean
 
 EXPOSE 8000
 
