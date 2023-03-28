@@ -1,0 +1,27 @@
+# (!) Fill the file with required data and rename it on `.env`
+
+SECRET_KEY=wW/7]>=pHRX>[69.c{v4K`O;<5r.<>T7&l'A\p%b0(_M4xtd8P}qHX":s!"n<`jvp5P
+IP=https://8000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}
+
+DATABASE_NAME=postgres
+DATABASE_USER=postgres
+DATABASE_PASSWORD=postgres
+DATABASE_HOST=db
+DATABASE_PORT=5432
+
+REDIS_LOCATION=/var/lib/redis
+
+# # SMTP Host
+# EMAIL_HOST_USER=
+# EMAIL_HOST_PASSWORD=
+
+# # ALLAUTH CONFIGURATION
+# YANDEX_CLIENT_ID=
+# YANDEX_SECRET=
+
+# GITHUB_ID=
+# GITHUB_SECRET=
+
+# # Logging errors mail
+ADMIN_NAME=Michael
+ADMIN_EMAIL=michaelagbia1990@gmail.com

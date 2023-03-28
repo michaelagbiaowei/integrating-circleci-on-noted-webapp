@@ -46,7 +46,7 @@ TEST_MODE = False
 
 SITE_ID = 1
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["https://8000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"]
 
 ADMINS = [(get_env_variable("ADMIN_NAME"), get_env_variable("ADMIN_EMAIL"))]
 
@@ -305,32 +305,32 @@ ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_USERNAME_MIN_LENGTH = 3
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
-#SOCIALACCOUNT_PROVIDERS = {
-    #"yandex": {
-     #   "APP": {
-    #        "client_id": get_env_variable("YANDEX_ID"),
-   #         "secret": get_env_variable("YANDEX_SECRET"),
-  #          "SCOPE": ["email"],
- #       }
+SOCIALACCOUNT_PROVIDERS = {
+#     "yandex": {
+#        "APP": {
+#            "client_id": get_env_variable("YANDEX_ID"),
+#            "secret": get_env_variable("YANDEX_SECRET"),
+#            "SCOPE": ["email"],
+#        }
 #    },
-    #"github": {
-       # "APP": {
-        #    "client_id": get_env_variable("GITHUB_ID"),
-       #     "secret": get_env_variable("GITHUB_SECRET"),
-      #      "SCOPE": ["email"],
-     #   }
-    #},
-    #"google": {
-        # CLIENT_ID and SECRET provieds via admin site.
-        #"SCOPE": [
-       #     "email",
-      #  ],
-     #   "AUTH_PARAMS": {
-    #        "access_type": "online",
-   #     },
-  #      "OAUTH_PKCE_ENABLED": True,
- #   },
-#}
+#     "github": {
+#        "APP": {
+#            "client_id": get_env_variable("GITHUB_ID"),
+#            "secret": get_env_variable("GITHUB_SECRET"),
+#            "SCOPE": ["email"],
+#        }
+#     },
+    "google": {
+       # CLIENT_ID and SECRET provieds via admin site.
+        "SCOPE": [
+           "email",
+       ],
+       "AUTH_PARAMS": {
+           "access_type": "online",
+       },
+       "OAUTH_PKCE_ENABLED": True,
+   },
+}
 
 TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_TAGS_FROM_STRING = "tags.utils.custom_tag_string"

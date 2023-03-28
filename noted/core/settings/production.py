@@ -10,6 +10,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     "welel-noted.site",
     "www.welel-noted.site",
+    "https://8000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}",
     get_env_variable("IP"), # ELASTIC IP
 ]
 
