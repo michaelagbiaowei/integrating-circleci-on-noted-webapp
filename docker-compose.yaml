@@ -8,12 +8,12 @@ services:
       dockerfile: Dockerfile
     env_file: .env
     volumes:
-      - ./:/noted/frontend
-      # - ./site:/noted
-      # - ./static:/noted/frontend
-      # - ./media:/noted/media
+      - ./:/noted
+      - ./site:/noted
+      - ./static:/noted/frontend
+      - ./media:/noted/media
     ports:
-      - "8000:8000"
+      - "0.0.0.0:8000:8000"
     networks:
       - noted-network
 

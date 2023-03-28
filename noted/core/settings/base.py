@@ -46,7 +46,7 @@ TEST_MODE = False
 
 SITE_ID = 1
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "https://8000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "54.80.60.6"]
 
 ADMINS = [(get_env_variable("ADMIN_NAME"), get_env_variable("ADMIN_EMAIL"))]
 

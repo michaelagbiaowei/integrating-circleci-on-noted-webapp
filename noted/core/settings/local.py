@@ -3,7 +3,7 @@
 from .base import *
 
 
-ALLOWED_HOSTS += ["127.0.0.1", "localhost", "https://8000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"]
+ALLOWED_HOSTS += ["127.0.0.1", "localhost", ""54.80.60.6]
 
 INTERNAL_IPS = ["127.0.0.1"]
 
