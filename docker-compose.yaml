@@ -7,28 +7,13 @@ services:
       context: .
       dockerfile: Dockerfile
     env_file: .env
-    # environment:
-      # - IP=https://8000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}
-      # - SECRET_KEY=wW/7]>=pHRX>[69.c{v4K`O;<5r.<>T7&l'A\p%b0(_M4xtd8P}qHX":s!"n<`jvp5P
-      # - DATABASE_NAME=postgres
-      # - DATABASE_USER=postgres
-      # - DATABASE_PASSWORD=12345
-      # - DATABASE_HOST=127.0.0.1
-      # - DATABASE_PORT=5432
-    #   # - EMAIL_HOST_USER=
-    #   # - EMAIL_HOST_PASSWORD=
-    #   # - YANDEX_ID=
-    #   # - YANDEX_SECRET=
-    #   # - GITHUB_ID=
-    #   # - GITHUB_SECRET=
-    #   # - ADMIN_NAME=
-    #   # - ADMIN_EMAIL=
-    #   # - TELEGRAM_BOT_TOKEN=
-    #   # - REDIS_LOCATION=
     volumes:
       - ./:/noted/frontend
+      # - ./site:/noted
+      # - ./static:/noted/frontend
+      # - ./media:/noted/media
     ports:
-      - "80:8000"
+      - "8000:8000"
     networks:
       - noted-network
 
@@ -39,9 +24,7 @@ services:
     env_file:
       - .env
     environment:
-      # - POSTGRES_HOST="${DATABASE_HOST}"
       - POSTGRES_USER=${DATABASE_USER}
-      # - POSTGRES_PORT="${DATABASE_PORT}"
       - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
     volumes:
