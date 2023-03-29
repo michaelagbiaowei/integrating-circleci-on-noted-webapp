@@ -114,7 +114,7 @@ jobs:
         - destroy-environment
         - notify_on_failure
 
-  ship-out-nodejs-app:
+  deploy-noted-app:
     docker:
       - image: cimg/python:3.10
     steps:
@@ -133,3 +133,21 @@ jobs:
       - delete-all-pods
       - destroy-environment
       - notify_on_failure
+
+  notify_on_success:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - slack/notify:
+          event: pass
+          channel: cicd-pipeline
+          template: success_tagged_deployment_1
+
+workflows:
+  version: 2
+  notedapp:
+    jobs:
+      - test
+      - build
+      - deploy-infrastructure
+      - 
