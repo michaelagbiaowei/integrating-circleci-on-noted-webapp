@@ -1,8 +1,15 @@
 version: 2.1
 orbs:
-  aws-cli: circleci/aws-cli@3.1.4
+  aws-cli: noted/aws-cli@3.1.4
 
 commands:
+  notify_on_failure:
+    steps:
+      - slack/notify:
+          event: fail
+          channel: cicd-pipeline
+          template: basic_fail_1
+
   install_awscli:
     description: Install AWS CLI v2
     steps:
@@ -14,45 +21,115 @@ commands:
             sudo ./aws/install
 
   destroy-environment:
-    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    description: Destroy and front-end cloudformation stacks given a workflow ID.
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name circleci
+            aws cloudformation delete-stack --stack-name ${STACK_NAME}
 
-test:
+jobs:
+  test:
+      docker:
+        - image: python:3.10
+      working_directory: ~/repo
+
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "requirements/production.txt" }}
+              - v1-dependencies-
+
+        - run:
+            name: install dependencies
+            command: |
+              python3 -m venv venv
+              . venv/bin/activate
+              make setdb
+              make hadolint
+        - save_cache:
+            paths:
+              - ./venv
+            key: v1-dependencies-{{ checksum "requirements/production.txt" }}
+
+        - run:
+            name: run lint
+            command: |
+              . venv/bin/activate
+              make lint
+
+  build:
     docker:
-      - image: python:3.10
-
-    working_directory: ~/repo
-
+      - image: cimg/python:3.10
     steps:
       - checkout
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "requirements/production.txt" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      
-      # Activate virtual env and install dependencies
       - run:
-          name: install dependencies
+          name: Install Docker client
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            make setdb
-            make hadolint
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements/production.txt" }}
+            set -x
+            VER="17.03.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            sudo mv /tmp/docker/* /usr/bin
+      - setup_remote_docker
 
-          # run lint
       - run:
-          name: run lint
+          name: Build Docker image
+          command: |  
+            docker build -t noted .
+
+      - run:
+          name: Push to Docker Hub
           command: |
-            . venv/bin/activate
-            make lint
+            echo "$DOCKER_PASSWORD"
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker tag $APP:latest $DOCKER_USERNAME/$APP
+            docker push $DOCKER_USERNAME/$APP
+      - notify_on_failure
+
+  deploy-infrastructure:
+      docker:
+        - image: amazon/aws-cli
+      steps:
+        - checkout
+        - run:
+            name: Install tar utility
+            command: |
+              yum install -y tar gzip
+        - run:
+            name: Ensure back-end infrastructure exists
+            command: |
+              NUM_WORKER_NODES=3
+              WORKER_NODES_INSTANCE_TYPE=t2.medium
+              STACK_NAME=noted
+              KEY_PAIR_NAME=noted
+              aws cloudformation deploy \
+              "$@" \
+              --template-file cloudformation/aws-eks.yml \
+              --capabilities CAPABILITY_IAM \
+              --stack-name "$STACK_NAME" \
+              --parameter-overrides
+        - destroy-environment
+        - notify_on_failure
+
+  ship-out-nodejs-app:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - install_awscli
+      - run:
+          name: Install kubectl
+          command: |
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            chmod +x ./kubectl
+            sudo mv ./kubectl /usr/local/bin/kubectl
+            aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME
+            kubectl apply -f kubernetes/
+            kubectl get pods
+            kubectl get services
+      - delete-all-pods
+      - destroy-environment
+      - notify_on_failure
