@@ -1,0 +1,18 @@
+apiVersion: v1
+data:
+  ADMIN_EMAIL: michaelagbia1990@gmail.com
+  ADMIN_NAME: Michael
+  DATABASE_HOST: postgres
+  DATABASE_NAME: postgres
+  DATABASE_PASSWORD: "12345"
+  DATABASE_PORT: "5432"
+  DATABASE_USER: postgres
+  IP: https://8000-.
+  REDIS_LOCATION: /var/lib/redis
+  SECRET_KEY: wW/7]>=pHRX>[69.c{v4K`O;<5r.<>T7&l'A\p%b0(_M4xtd8P}qHX":s!"n<`jvp5P
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app-env
+  name: env

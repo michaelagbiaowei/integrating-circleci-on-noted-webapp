@@ -6,9 +6,10 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
+    image: maiempire/noted-app
+    container_name: noted
     env_file: .env
     volumes:
-      - ./:/noted
       - ./site:/noted
       - ./static:/noted/frontend
       - ./media:/noted/media
@@ -16,6 +17,8 @@ services:
       - "0.0.0.0:8000:8000"
     networks:
       - noted-network
+    labels:
+      kompose.service.type: LoadBalancer
 
 # DATABASE {POSTGRESQL}
   postgres:

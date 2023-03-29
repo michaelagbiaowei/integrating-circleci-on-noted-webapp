@@ -147,7 +147,31 @@ workflows:
   version: 2
   notedapp:
     jobs:
-      - test
-      - build
-      - deploy-infrastructure
-      - 
+      - test:
+          filters:
+            branches:
+              only: [test-branch]
+      - build:
+          requires: [test]
+          filters:
+            branches:
+              only: [test-branch]
+      - hold-deployment:
+          filters:
+            branches:
+              only: [main]      
+      - deploy-infrastructure:
+          requires: [hold-deployment]
+          filters:
+            branches:
+              only: [main]
+      - deploy-noted-app:
+          requires: [deploy-infrastructure]
+          filters:
+            branches:
+              only: [main]
+      - notify_on_success:
+          requires: [deploy-noted-app]
+          filters:
+            branches:
+              only: [main]
