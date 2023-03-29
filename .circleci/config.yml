@@ -1,1 +1,57 @@
-working in progress
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@3.1.4
+
+commands:
+  install_awscli:
+    description: Install AWS CLI v2
+    steps:
+      - run:
+          name: Install AWS CLI v2
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name circleci
+
+test:
+    docker:
+      - image: python:3.10
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements/production.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      # Activate virtual env and install dependencies
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make setdb
+            make hadolint
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements/production.txt" }}
+
+          # run lint
+      - run:
+          name: run lint
+          command: |
+            . venv/bin/activate
+            make lint

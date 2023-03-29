@@ -25,6 +25,10 @@ createsuperuser: env/bin/python noted/core/settings/local.py noted/manage.py
 test: env/bin/python noted/core/settings/local.py noted/manage.py
 	./env/bin/python noted/manage.py test actions common content core tags users --settings=core.settings.test
 
+hadolint:
+	wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+	chmod +x /bin/hadolint
+
 lint:
 	# See local hadolint install instructions:   https://github.com/hadolint/hadolint
 	# This is linter for Dockerfiles
