@@ -128,7 +128,7 @@ jobs:
             chmod +x ./kubectl
             sudo mv ./kubectl /usr/local/bin/kubectl
             aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME
-            kubectl apply -f kubernetes/
+            kubectl apply -f k8s-files/
             kubectl get pods
             kubectl get services
       - delete-all-pods
