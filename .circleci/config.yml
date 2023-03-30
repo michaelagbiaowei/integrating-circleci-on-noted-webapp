@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
-  aws-cli: noted/aws-cli@3.1.4
+  slack: circleci/slack@4.10.1
+  aws-cli: circleci/aws-cli@3.1.4
 
 commands:
   notify_on_failure:
